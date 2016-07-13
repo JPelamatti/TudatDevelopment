@@ -52,11 +52,6 @@ namespace tudat
 namespace electro_magnetism
 {
 
-Eigen::MatrixXd R_12(3,3);
-
-double gamma;
-double beta;
-
 
 //! Compute radiation pressure acceleration using an ideal sail model.
 
@@ -69,8 +64,7 @@ Eigen::Vector3d computeIdealRadiationPressureAcceleration(
         const double mass )
 {
     return computeIdealRadiationPressureForce(
-                radiationPressure, normalToSail,  normalToSource, area, radiationPressureCoefficient - 1.0 ) / mass;;
-
+                radiationPressure, normalToSail,  normalFromSource, area, radiationPressureCoefficient - 1.0 ) / mass;;
 }
 
 } // namespace electro_magnetism

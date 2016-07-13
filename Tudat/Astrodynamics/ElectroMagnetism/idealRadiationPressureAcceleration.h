@@ -180,7 +180,7 @@ public:
     Eigen::Vector3d getAcceleration( )
     {
         return computeIdealRadiationPressureAcceleration(
-                    currentRadiationPressure_, -currentVectorFromSource_, currentSailNormal_,
+                    currentRadiationPressure_, currentVectorFromSource_, currentSailNormal_,
                     currentArea_, currentRadiationPressureCoefficient_, currentMass_ );
     }
 
@@ -195,8 +195,7 @@ public:
     {
         if( !( this->currentTime_ == currentTime ) )
         {
-            currentVectorFromSource_ = ( acceleratedBodyPositionFunction_( )
-                                       - sourcePositionFunction_( ) ).normalized( );
+            currentVectorFromSource_ = ( acceleratedBodyPositionFunction_( ) - sourcePositionFunction_( )).normalized( );
             currentRadiationPressure_ = radiationPressureFunction_( );
             currentSailAngles_ = sailAnglesFunction_( currentTime );
 
@@ -224,8 +223,29 @@ private:
 
     void setSailNormalVector( )
     {
-        currentSailNormal_ = .... func( currentSailAngles_, currentVectorFromSource_ ) .....
 
+        double gamma,beta;
+        Eigen::MatrixXd R_12(3,3);
+        Eigen::Vector3d intermediateNormal;
+
+        gamma = asin(currentVectorFromSource_(2)/currentVectorFromSource_.norm());
+        beta = atan(currentVectorFromSource_(1)/currentVectorFromSource_(0));
+
+        R_12(0,0) = cos(beta);
+        R_12(0,1) = -sin(beta);
+        R_12(0,2) = -cos(beta)*sin(gamma);
+        R_12(1,0) = sin(beta)*cos(gamma);
+        R_12(1,1) = cos(beta);
+        R_12(1,2) = -sin(beta)*sin(gamma);
+        R_12(2,0) = sin(gamma);
+        R_12(2,1) = 0;
+        R_12(2,2) = cos(gamma);
+
+        intermediateNormal(0) = cos(currentSailAngles_(0));
+        intermediateNormal(1) = sin(currentSailAngles_(0))*sin(currentSailAngles_(1));
+        intermediateNormal(2) = sin(currentSailAngles_(0))*cos(currentSailAngles_(1));
+
+        currentSailNormal_ = R_12*intermediateNormal;
     }
 
     //! Function pointer returning position of source.
@@ -276,6 +296,7 @@ private:
     //! Current sail attitude angles
     Eigen::Vector2d currentSailAngles_;
 
+    // Current vector normal to the sail
     Eigen::Vector3d currentSailNormal_;
 
     //! Current radiation pressure.

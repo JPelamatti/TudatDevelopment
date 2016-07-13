@@ -49,7 +49,7 @@ namespace electro_magnetism
  * \param radiationPressure Radiation pressure at target. N.B: the usual way of computing the
  *          radiation pressure at the target, in case the source is the Sun, is to take the
  *          radiation presssure at 1 AU and scale it based on the distance from the Sun     [N/m^2]
- * \param vectorToSource Vector pointing from target to source. N.B: this must be a unit
+ * \param vectorFromSource Vector pointing from target to source. N.B: this must be a unit
  *          vector! To compute the unit vector based on a given position vector, you can
  *          use the .normalize() or .normalized() member functions of an Eigen::Vector3d
  *          object.                                                                             [-]
@@ -59,12 +59,11 @@ namespace electro_magnetism
  * \return Force due to radiation pressure.                                                     [N]
  */
 //! Compute radiation pressure force using an ideal solar sail model.
-Eigen::Vector3d computeIdealRadiationPressureForce(
-        const double radiationPressure,
-        const Eigen::Vector3d& normalToSource,
+Eigen::Vector3d computeIdealRadiationPressureForce(const double radiationPressure,
+        const Eigen::Vector3d& vectorFromSource,
         const Eigen::Vector3d& normalToSail,
         const double area,
-        const double emissivity );
+        const double radiationPressureCoefficient );
 
 } // namespace electro_magnetism
 } // namespace tudat
