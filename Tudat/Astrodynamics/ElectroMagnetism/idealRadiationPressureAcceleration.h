@@ -76,9 +76,8 @@ namespace electro_magnetism
  * \return Acceleration due to radiation pressure.                                          [m/s^2]
  * \sa computeCannonBallRadiationPressureForce().
  */
-Eigen::Vector3d computeIdealRadiationPressureAcceleration(
-        const double radiationPressure,
-        const Eigen::Vector3d& normalToSource,
+Eigen::Vector3d computeIdealRadiationPressureAcceleration(const double radiationPressure,
+        const Eigen::Vector3d& vectorFromSource,
         const Eigen::Vector3d& normalToSail,
         const double area,
         const double radiationPressureCoefficient,
