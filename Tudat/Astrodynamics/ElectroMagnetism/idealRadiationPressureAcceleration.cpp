@@ -37,8 +37,8 @@
 
 #include "Tudat/Mathematics/BasicMathematics/mathematicalConstants.h"
 
-#include "Tudat/Astrodynamics/ElectroMagnetism/cannonBallRadiationPressureAcceleration.h"
-#include "Tudat/Astrodynamics/ElectroMagnetism/cannonBallRadiationPressureForce.h"
+#include "Tudat/Astrodynamics/ElectroMagnetism/idealRadiationPressureAcceleration.h"
+#include "Tudat/Astrodynamics/ElectroMagnetism/idealRadiationPressureForce.h"
 
 #include <cmath>
 
@@ -56,8 +56,8 @@ Eigen::Vector3d normalToSail;
 Eigen::Vector3d lightOrientedSolution;
 Eigen::MatrixXd R_12(3,3);
 
-const double gamma;
-const double beta;
+double gamma;
+double beta;
 
 
 //! Compute radiation pressure acceleration using an ideal sail model.
@@ -71,9 +71,9 @@ Eigen::Vector3d computeIdealRadiationPressureAcceleration(
         const double mass )
 {
 
-    normalToSail.push_back(cos(sailAngles(0)));
-    normalToSail.push_back(sin(sailAngles(0))*sin(sailAngles(1)));
-    normalToSail.push_back(sin(sailAngles(0))*cos(sailAngles(1)));
+    normalToSail(0) = cos(sailAngles(0));
+    normalToSail(1) = sin(sailAngles(0))*sin(sailAngles(1));
+    normalToSail(2) = sin(sailAngles(0))*cos(sailAngles(1));
 
     gamma = asin(vectorFromSource(2)/vectorFromSource.norm());
     beta = atan(vectorFromSource(1)/vectorFromSource(0));

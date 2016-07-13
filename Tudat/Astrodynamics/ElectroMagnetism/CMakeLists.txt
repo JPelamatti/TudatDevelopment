@@ -37,6 +37,8 @@
 set(ELECTROMAGNETISM_SOURCES
   "${SRCROOT}${ELECTROMAGNETISMDIR}/cannonBallRadiationPressureAcceleration.h"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/cannonBallRadiationPressureForce.h"
+  "${SRCROOT}${ELECTROMAGNETISMDIR}/idealRadiationPressureAcceleration.h"
+  "${SRCROOT}${ELECTROMAGNETISMDIR}/idealRadiationPressureForce.h"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/lorentzStaticMagneticForce.h"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/lorentzStaticMagneticAcceleration.h"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/radiationPressureInterface.h"
@@ -46,6 +48,8 @@ set(ELECTROMAGNETISM_SOURCES
 set(ELECTROMAGNETISM_HEADERS
   "${SRCROOT}${ELECTROMAGNETISMDIR}/cannonBallRadiationPressureAcceleration.cpp"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/cannonBallRadiationPressureForce.cpp"
+  "${SRCROOT}${ELECTROMAGNETISMDIR}/idealRadiationPressureAcceleration.cpp"
+  "${SRCROOT}${ELECTROMAGNETISMDIR}/idealRadiationPressureForce.cpp"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/lorentzStaticMagneticForce.cpp"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/lorentzStaticMagneticAcceleration.cpp"
   "${SRCROOT}${ELECTROMAGNETISMDIR}/radiationPressureInterface.cpp"
