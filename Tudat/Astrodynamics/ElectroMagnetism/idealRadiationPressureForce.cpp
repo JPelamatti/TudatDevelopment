@@ -45,12 +45,14 @@ namespace electro_magnetism
 //! Compute radiation pressure force using an ideal solar sail model.
 Eigen::Vector3d computeIdealRadiationPressureForce(
         const double radiationPressure,
+        const Eigen::Vector3d& normalToSource,
         const Eigen::Vector3d& normalToSail,
         const double area,
-        const double radiationPressureCoefficient,
-        const Eigen::Vector2d& sailAngles )
+        const double emissivity )
 {
-    return 2*radiationPressure*radiationPressureCoefficient*area*cos(sailAngles(0)*sailAngles(0))*normalToSail;
+    double angle = std::acos( normalToSource.dot( normalToSail ) );
+    return -radiationPressure * area * std::cos( angle ) * ( ( 1.0 - emissivity ) * normalToSource +
+                                                                  2.0 * emissivity  * std::cos( angle ) * normalToSail );
 }
 
 } // namespace electro_magnetism

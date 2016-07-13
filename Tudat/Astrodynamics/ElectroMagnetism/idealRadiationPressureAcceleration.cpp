@@ -52,8 +52,6 @@ namespace tudat
 namespace electro_magnetism
 {
 
-Eigen::Vector3d normalToSail;
-Eigen::Vector3d lightOrientedSolution;
 Eigen::MatrixXd R_12(3,3);
 
 double gamma;
@@ -64,34 +62,14 @@ double beta;
 
 Eigen::Vector3d computeIdealRadiationPressureAcceleration(
         const double radiationPressure,
-        const Eigen::Vector3d& vectorFromSource,
-        const Eigen::Vector2d& sailAngles,
+        const Eigen::Vector3d& normalToSource,
+        const Eigen::Vector3d& normalToSail,
         const double area,
         const double radiationPressureCoefficient,
         const double mass )
 {
-
-    normalToSail(0) = cos(sailAngles(0));
-    normalToSail(1) = sin(sailAngles(0))*sin(sailAngles(1));
-    normalToSail(2) = sin(sailAngles(0))*cos(sailAngles(1));
-
-    gamma = asin(vectorFromSource(2)/vectorFromSource.norm());
-    beta = atan(vectorFromSource(1)/vectorFromSource(0));
-
-    R_12(0,0) = cos(beta);
-    R_12(0,1) = -sin(beta);
-    R_12(0,2) = -cos(beta)*sin(gamma);
-    R_12(1,0) = sin(beta)*cos(gamma);
-    R_12(1,1) = cos(beta);
-    R_12(1,2) = -sin(beta)*sin(gamma);
-    R_12(2,0) = sin(gamma);
-    R_12(2,1) = 0;
-    R_12(2,2) = cos(gamma);
-
-    lightOrientedSolution = computeIdealRadiationPressureForce(
-                radiationPressure, normalToSail, area, radiationPressureCoefficient, sailAngles) / mass;
-
-    return R_12*lightOrientedSolution;
+    return computeIdealRadiationPressureForce(
+                radiationPressure, normalToSail,  normalToSource, area, radiationPressureCoefficient - 1.0 ) / mass;;
 
 }
 

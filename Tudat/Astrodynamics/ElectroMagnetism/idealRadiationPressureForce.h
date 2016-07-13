@@ -58,13 +58,13 @@ namespace electro_magnetism
  *          emmisivitty, assuming no diffuse reflection.                                        [-]
  * \return Force due to radiation pressure.                                                     [N]
  */
-
+//! Compute radiation pressure force using an ideal solar sail model.
 Eigen::Vector3d computeIdealRadiationPressureForce(
         const double radiationPressure,
+        const Eigen::Vector3d& normalToSource,
         const Eigen::Vector3d& normalToSail,
         const double area,
-        const double radiationPressureCoefficient,
-        const Eigen::Vector2d& sailAngles );
+        const double emissivity );
 
 } // namespace electro_magnetism
 } // namespace tudat

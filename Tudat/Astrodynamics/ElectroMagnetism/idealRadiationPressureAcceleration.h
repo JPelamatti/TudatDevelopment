@@ -78,12 +78,11 @@ namespace electro_magnetism
  */
 Eigen::Vector3d computeIdealRadiationPressureAcceleration(
         const double radiationPressure,
-        const Eigen::Vector3d& vectorFromSource,
-        const Eigen::Vector2d& sailAngles,
+        const Eigen::Vector3d& normalToSource,
+        const Eigen::Vector3d& normalToSail,
         const double area,
         const double radiationPressureCoefficient,
         const double mass );
-
 
 //! Ideal Radiation pressure acceleration model class.
 
@@ -98,7 +97,7 @@ private:
     typedef boost::function< Eigen::Vector3d( ) > Vector3dReturningFunction;
 
     //! Typedef for Eigen::Vector2d-returning function.
-    typedef boost::function< Eigen::Vector2d( ) > Vector2dReturningFunction;
+    typedef boost::function< Eigen::Vector2d( const double ) > Vector2dReturningFunction;
 
 public:
 
@@ -181,7 +180,7 @@ public:
     Eigen::Vector3d getAcceleration( )
     {
         return computeIdealRadiationPressureAcceleration(
-                    currentRadiationPressure_, currentVectorFromSource_, currentSailAngles_,
+                    currentRadiationPressure_, -currentVectorFromSource_, currentSailNormal_,
                     currentArea_, currentRadiationPressureCoefficient_, currentMass_ );
     }
 
@@ -199,10 +198,15 @@ public:
             currentVectorFromSource_ = ( acceleratedBodyPositionFunction_( )
                                        - sourcePositionFunction_( ) ).normalized( );
             currentRadiationPressure_ = radiationPressureFunction_( );
-            currentSailAngles_ = sailAnglesFunction_( );
+            currentSailAngles_ = sailAnglesFunction_( currentTime );
+
+            setSailNormalVector( );
+
             currentRadiationPressureCoefficient_ = radiationPressureCoefficientFunction_( );
             currentArea_ = areaFunction_( );
             currentMass_ = massFunction_( );
+
+            currentTime_ = currentTime;
         }
     }
 
@@ -217,6 +221,12 @@ public:
     }
 
 private:
+
+    void setSailNormalVector( )
+    {
+        currentSailNormal_ = .... func( currentSailAngles_, currentVectorFromSource_ ) .....
+
+    }
 
     //! Function pointer returning position of source.
     /*!
@@ -265,6 +275,8 @@ private:
 
     //! Current sail attitude angles
     Eigen::Vector2d currentSailAngles_;
+
+    Eigen::Vector3d currentSailNormal_;
 
     //! Current radiation pressure.
     /*!
