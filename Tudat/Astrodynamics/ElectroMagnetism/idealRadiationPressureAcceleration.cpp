@@ -55,9 +55,8 @@ namespace electro_magnetism
 
 //! Compute radiation pressure acceleration using an ideal sail model.
 
-Eigen::Vector3d computeIdealRadiationPressureAcceleration(
-        const double radiationPressure,
-        const Eigen::Vector3d& normalToSource,
+Eigen::Vector3d computeIdealRadiationPressureAcceleration(const double radiationPressure,
+        const Eigen::Vector3d& normalFromSource,
         const Eigen::Vector3d& normalToSail,
         const double area,
         const double radiationPressureCoefficient,
