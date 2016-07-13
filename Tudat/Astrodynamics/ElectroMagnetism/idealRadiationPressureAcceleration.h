@@ -38,8 +38,8 @@
  *
  */
 
-#ifndef TUDAT_CANNON_BALL_RADIATION_PRESSURE_ACCELERATION_H
-#define TUDAT_CANNON_BALL_RADIATION_PRESSURE_ACCELERATION_H
+#ifndef TUDAT_IDEAL_RADIATION_PRESSURE_ACCELERATION_H
+#define TUDAT_IDEAL_RADIATION_PRESSURE_ACCELERATION_H
 
 #include <boost/function.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -224,7 +224,7 @@ private:
 
     void setSailNormalVector( )
     {
-        currentSailNormal_ = .... func( currentSailAngles_, currentVectorFromSource_ ) .....
+        //currentSailNormal_ = .... func( currentSailAngles_, currentVectorFromSource_ ) .....
 
     }
 
@@ -309,4 +309,4 @@ typedef boost::shared_ptr< IdealRadiationPressureAcceleration > IdealRadiationPr
 } // namespace electro_magnetism
 } // namespace tudat
 
-#endif // TUDAT_CANNON_BALL_RADIATION_PRESSURE_ACCELERATION_H
+#endif // TUDAT_IDEAL_RADIATION_PRESSURE_ACCELERATION_H

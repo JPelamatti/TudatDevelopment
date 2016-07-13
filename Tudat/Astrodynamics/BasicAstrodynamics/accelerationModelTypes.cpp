@@ -63,6 +63,11 @@ AvailableAcceleration getAccelerationModelType(
     {
         accelerationType = cannon_ball_radiation_pressure;
     }
+    else if( boost::dynamic_pointer_cast< IdealRadiationPressureAcceleration >(
+                 accelerationModel ) != NULL )
+    {
+        accelerationType = single_plate_radiation_pressure;
+    }
     else if( boost::dynamic_pointer_cast< ThirdBodyCentralGravityAcceleration >(
                  accelerationModel ) != NULL )
     {

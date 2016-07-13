@@ -302,6 +302,14 @@ createCannonballRadiationPressureAcceleratioModel(
         const std::string& nameOfBodyUndergoingAcceleration,
         const std::string& nameOfBodyExertingAcceleration );
 
+boost::shared_ptr< electro_magnetism::IdealRadiationPressureAcceleration >
+createFlatPlateRadiationPressureAcceleratioModel(
+        const boost::shared_ptr< AccelerationSettings > accelerationSettings,
+        const boost::shared_ptr< Body > bodyUndergoingAcceleration,
+        const boost::shared_ptr< Body > bodyExertingAcceleration,
+        const std::string& nameOfBodyUndergoingAcceleration,
+        const std::string& nameOfBodyExertingAcceleration );
+
 //! Function to create acceleration model object.
 /*!
  *  Function to create acceleration model object.

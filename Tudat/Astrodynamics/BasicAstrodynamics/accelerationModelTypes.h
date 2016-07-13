@@ -36,6 +36,7 @@
 #define TUDAT_ACCELERATIONMODELTYPES_H
 
 #include "Tudat/Astrodynamics/ElectroMagnetism/cannonBallRadiationPressureAcceleration.h"
+#include "Tudat/Astrodynamics/ElectroMagnetism/idealRadiationPressureAcceleration.h"
 #include "Tudat/Astrodynamics/Gravitation/centralGravityModel.h"
 #include "Tudat/Astrodynamics/Gravitation/sphericalHarmonicsGravityModel.h"
 #include "Tudat/Astrodynamics/Gravitation/mutualSphericalHarmonicGravityModel.h"
@@ -62,6 +63,7 @@ enum AvailableAcceleration
     central_gravity,
     aerodynamic,
     cannon_ball_radiation_pressure,
+    single_plate_radiation_pressure,
     spherical_harmonic_gravity,
     mutual_spherical_harmonic_gravity,
     third_body_central_gravity,

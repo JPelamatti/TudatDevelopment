@@ -749,6 +749,47 @@ createCannonballRadiationPressureAcceleratioModel(
 
 }
 
+//! Function to create a cannonball radiation pressure acceleration model.
+boost::shared_ptr< IdealRadiationPressureAcceleration >
+createFlatPlateRadiationPressureAcceleratioModel(
+        const boost::shared_ptr< AccelerationSettings > accelerationSettings,
+        const boost::shared_ptr< Body > bodyUndergoingAcceleration,
+        const boost::shared_ptr< Body > bodyExertingAcceleration,
+        const std::string& nameOfBodyUndergoingAcceleration,
+        const std::string& nameOfBodyExertingAcceleration )
+{
+    boost::shared_ptr< FlatPlateRadiationPressureAccelerationSettings > derivedAccelerationSettings =
+            boost::dynamic_pointer_cast< FlatPlateRadiationPressureAccelerationSettings >( accelerationSettings );
+
+    if( derivedAccelerationSettings == NULL )
+    {
+        throw std::runtime_error( "Error when making flate plate radiation pressure acceleration, input is inconsistent" );
+    }
+
+    // Retrieve radiation pressure interface
+    if( bodyUndergoingAcceleration->getRadiationPressureInterfaces( ).count(
+                nameOfBodyExertingAcceleration ) == 0 )
+    {
+        throw std::runtime_error(
+                    "Error when making radiation pressure, no radiation pressure interface found  in " +
+                    nameOfBodyUndergoingAcceleration +
+                    " for body " + nameOfBodyExertingAcceleration );
+    }
+    boost::shared_ptr< RadiationPressureInterface > radiationPressureInterface =
+            bodyUndergoingAcceleration->getRadiationPressureInterfaces( ).at(
+                nameOfBodyExertingAcceleration );
+
+    // Create acceleration model.
+    return boost::make_shared< IdealRadiationPressureAcceleration >(
+                boost::bind( &Body::getPosition, bodyExertingAcceleration ),
+                boost::bind( &Body::getPosition, bodyUndergoingAcceleration ),
+                derivedAccelerationSettings->angleWrtSourceVectorFunction_,
+                boost::bind( &RadiationPressureInterface::getCurrentRadiationPressure, radiationPressureInterface ),
+                boost::bind( &RadiationPressureInterface::getRadiationPressureCoefficient, radiationPressureInterface ),
+                boost::bind( &RadiationPressureInterface::getArea, radiationPressureInterface ),
+                boost::bind( &Body::getBodyMass, bodyUndergoingAcceleration ) );
+}
+
 
 //! Function to create acceleration model object.
 boost::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationModel(
@@ -793,6 +834,14 @@ boost::shared_ptr< AccelerationModel< Eigen::Vector3d > > createAccelerationMode
         break;
     case cannon_ball_radiation_pressure:
         accelerationModelPointer = createCannonballRadiationPressureAcceleratioModel(
+                    bodyUndergoingAcceleration,
+                    bodyExertingAcceleration,
+                    nameOfBodyUndergoingAcceleration,
+                    nameOfBodyExertingAcceleration );
+        break;
+    case single_plate_radiation_pressure:
+        accelerationModelPointer = createFlatPlateRadiationPressureAcceleratioModel(
+                    accelerationSettings,
                     bodyUndergoingAcceleration,
                     bodyExertingAcceleration,
                     nameOfBodyUndergoingAcceleration,
