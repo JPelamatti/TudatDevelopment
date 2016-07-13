@@ -50,7 +50,7 @@ Eigen::Vector3d computeIdealRadiationPressureForce(
         const double area,
         const double emissivity )
 {
-    double cone_Angle = std::acos( normalToSource.dot( normalToSail ) );
+    double cone_Angle = std::acos( vectorFromSource.dot( normalToSail ) );
     return radiationPressure * area * std::cos( cone_Angle ) * ( ( 1.0 - emissivity ) * vectorFromSource +
             2.0 * emissivity  * std::cos( cone_Angle ) * normalToSail );
 }
