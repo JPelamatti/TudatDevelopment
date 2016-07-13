@@ -263,6 +263,9 @@ private:
      */
     Eigen::Vector3d currentVectorFromSource_;
 
+    //! Current sail attitude angles
+    Eigen::Vector2d currentSailAngles_;
+
     //! Current radiation pressure.
     /*!
      * Current radiation pressure [N/m^{2}].
