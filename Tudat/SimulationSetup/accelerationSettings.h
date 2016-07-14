@@ -135,6 +135,26 @@ public:
     int maximumOrderOfCentralBody_;
 };
 
+class FlatPlateRadiationPressureAccelerationSettings: public AccelerationSettings
+{
+public:
+    //! Constructor, sets type of acceleration.
+    /*!
+     *  Constructor, sets type of acceleration.
+     *  \param accelerationType Type of acceleration from AvailableAcceleration enum.
+     */
+    FlatPlateRadiationPressureAccelerationSettings(
+            const boost::function< Eigen::Vector2d( const double ) > angleWrtSourceVectorFunction ):
+        AccelerationSettings( basic_astrodynamics::single_plate_radiation_pressure ),
+        angleWrtSourceVectorFunction_( angleWrtSourceVectorFunction ){ }
+
+    //! Destructor.
+    ~FlatPlateRadiationPressureAccelerationSettings( ){ }
+
+    //! Type of acceleration from AvailableAcceleration enum.
+    boost::function< Eigen::Vector2d( const double ) > angleWrtSourceVectorFunction_;
+};
+
 
 //! Typedef defining a list of acceleration settings, set up in the same manner as the
 //! AccelerationMap typedef.

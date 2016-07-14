@@ -34,6 +34,8 @@
 
 #include "Tudat/Astrodynamics/ElectroMagnetism/idealRadiationPressureForce.h"
 
+#include <iostream>
+
 #include <cmath>
 
 
@@ -51,8 +53,16 @@ Eigen::Vector3d computeIdealRadiationPressureForce(
         const double emissivity )
 {
     double cone_Angle = std::acos( vectorFromSource.dot( normalToSail ) );
+
+    std::cout << "\n cone angle " << cone_Angle;
+    std::cout << "\n vector from source" << vectorFromSource;
+    std::cout << "\n normal to sail" << normalToSail;
+
     return radiationPressure * area * std::cos( cone_Angle ) * ( ( 1.0 - emissivity ) * vectorFromSource +
             2.0 * emissivity  * std::cos( cone_Angle ) * normalToSail );
+
+
+
 }
 
 } // namespace electro_magnetism

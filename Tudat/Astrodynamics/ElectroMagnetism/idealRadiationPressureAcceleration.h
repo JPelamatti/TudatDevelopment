@@ -38,8 +38,8 @@
  *
  */
 
-#ifndef TUDAT_CANNON_BALL_RADIATION_PRESSURE_ACCELERATION_H
-#define TUDAT_CANNON_BALL_RADIATION_PRESSURE_ACCELERATION_H
+#ifndef TUDAT_IDEAL_RADIATION_PRESSURE_ACCELERATION_H
+#define TUDAT_IDEAL_RADIATION_PRESSURE_ACCELERATION_H
 
 #include <boost/function.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -194,7 +194,8 @@ public:
     {
         if( !( this->currentTime_ == currentTime ) )
         {
-            currentVectorFromSource_ = ( acceleratedBodyPositionFunction_( ) - sourcePositionFunction_( )).normalized( );
+            currentVectorFromSource_ = ( acceleratedBodyPositionFunction_( ) -
+                                         sourcePositionFunction_( )).normalized( );
             currentRadiationPressure_ = radiationPressureFunction_( );
             currentSailAngles_ = sailAnglesFunction_( currentTime );
 
@@ -227,13 +228,26 @@ private:
         Eigen::MatrixXd R_12(3,3);
         Eigen::Vector3d intermediateNormal;
 
-        gamma = asin(currentVectorFromSource_(2)/currentVectorFromSource_.norm());
-        beta = atan(currentVectorFromSource_(1)/currentVectorFromSource_(0));
+        gamma = std::asin(currentVectorFromSource_(2)/currentVectorFromSource_.norm());
+        beta = std::atan2(currentVectorFromSource_(1),currentVectorFromSource_(0));
 
-        R_12(0,0) = cos(beta);
+        std::cout << "\n gamma" << gamma;
+        std::cout << "\n beta" << beta;
+
+        /*R_12(0,0) = cos(beta);
         R_12(0,1) = -sin(beta);
         R_12(0,2) = -cos(beta)*sin(gamma);
         R_12(1,0) = sin(beta)*cos(gamma);
+        R_12(1,1) = cos(beta);
+        R_12(1,2) = -sin(beta)*sin(gamma);
+        R_12(2,0) = sin(gamma);
+        R_12(2,1) = 0;
+        R_12(2,2) = cos(gamma);*/
+
+        R_12(0,0) = cos(beta)*cos(gamma);
+        R_12(0,1) = -sin(beta);
+        R_12(0,2) = -sin(gamma)*cos(beta);
+        R_12(1,0) = cos(gamma)*sin(beta);
         R_12(1,1) = cos(beta);
         R_12(1,2) = -sin(beta)*sin(gamma);
         R_12(2,0) = sin(gamma);
@@ -329,4 +343,4 @@ typedef boost::shared_ptr< IdealRadiationPressureAcceleration > IdealRadiationPr
 } // namespace electro_magnetism
 } // namespace tudat
 
-#endif // TUDAT_CANNON_BALL_RADIATION_PRESSURE_ACCELERATION_H
+#endif // TUDAT_IDEAL_RADIATION_PRESSURE_ACCELERATION_H
