@@ -131,7 +131,6 @@ public:
           areaFunction_( areaFunction ),
           massFunction_( massFunction )
     {
-        this->updateMembers( );
     }
 
     //! Constructor taking functions pointers and constant values for parameters.
@@ -163,7 +162,6 @@ public:
           areaFunction_( boost::lambda::constant( area ) ),
           massFunction_( boost::lambda::constant( mass ) )
     {
-        this->updateMembers( );
     }
 
     //! Get radiation pressure acceleration.
@@ -196,6 +194,11 @@ public:
         {
             currentVectorFromSource_ = ( acceleratedBodyPositionFunction_( ) -
                                          sourcePositionFunction_( )).normalized( );
+
+           std::cout << " \n accelerated body position \n" << acceleratedBodyPositionFunction_( );
+           std::cout << " \n source position \n" << sourcePositionFunction_( );
+
+
             currentRadiationPressure_ = radiationPressureFunction_( );
             currentSailAngles_ = sailAnglesFunction_( currentTime );
 
@@ -227,6 +230,8 @@ private:
         double gamma,beta;
         Eigen::MatrixXd R_12(3,3);
         Eigen::Vector3d intermediateNormal;
+
+        std::cout << "\n Current vector from source" << currentVectorFromSource_;
 
         gamma = std::asin(currentVectorFromSource_(2)/currentVectorFromSource_.norm());
         beta = std::atan2(currentVectorFromSource_(1),currentVectorFromSource_(0));

@@ -63,8 +63,9 @@ Eigen::Vector3d computeIdealRadiationPressureAcceleration(
         const double radiationPressureCoefficient,
         const double mass )
 {
+
     return computeIdealRadiationPressureForce(
-                radiationPressure, normalToSail,  vectorFromSource, area, radiationPressureCoefficient - 1.0 ) / mass;;
+                radiationPressure, vectorFromSource, normalToSail, area, radiationPressureCoefficient - 1.0 ) / mass;
 }
 
 } // namespace electro_magnetism
